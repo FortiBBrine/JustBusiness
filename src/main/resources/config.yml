@@ -1,0 +1,14 @@
+business_own:
+  IJustFortiLive:
+    - party
+
+radius: 5
+
+businesses:
+  party:
+    world: "world"
+    x: 10
+    y: 10
+    z: 10
+    dd: 10
+    cost: 10
