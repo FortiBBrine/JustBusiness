@@ -28,4 +28,12 @@ public class Business {
         return this.dd;
     }
 
+    public void setCost(BigInteger cost) {
+        this.cost = cost;
+    }
+
+    public void setDD(BigInteger dd) {
+        this.dd = dd;
+    }
+
 }

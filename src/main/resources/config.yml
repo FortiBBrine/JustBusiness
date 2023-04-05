@@ -4,6 +4,20 @@ business_own:
 
 radius: 5
 
+messages:
+  admin:
+    non_player_command:
+      - "§4Ошибка: §fЭту команду не может исполнить консоль."
+    permission:
+      - "§4Ошибка: §fНедостаточно прав."
+    usage:
+      - "§7Руководство по использованию плагина "
+      - "§7 §7- /jb create [ID] [Цена] [Доход]"
+      - "§7 §7- /jb give [Никнейм] [ID]"
+      - "§7 §7- /jb remove [Никнейм] [ID]"
+      - "§7 §7- /jb delete [ID]"
+      - "§7 §7- /jb set [ID] [Цена] [Доход]"
+
 businesses:
   party:
     world: "world"

@@ -2,3 +2,25 @@ name: JustBusiness
 version: '${project.version}'
 main: me.FortiBrine.JustBusiness.JustBusiness
 api-version: 1.16
+
+commands:
+  justbusiness:
+    description: "Команда для управления плагином"
+    aliases:
+      - jb
+      - justbusiness
+
+permissions:
+  justbusiness.*:
+    description: "Команда для получения всех прав"
+    children:
+      justbusiness.buy: true
+      justbusiness.admin: true
+    default: op
+
+  justbusiness.buy:
+    description: "Право для покупки бизнеса"
+    default: true
+  justbusiness.admin:
+    description: "Команда для управления плагином"
+    default: op
