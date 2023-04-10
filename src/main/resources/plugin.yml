@@ -3,6 +3,8 @@ version: '${project.version}'
 main: me.FortiBrine.JustBusiness.JustBusiness
 api-version: 1.16
 
+depend: [JustMoney]
+
 commands:
   justbusiness:
     description: "Команда для управления плагином"

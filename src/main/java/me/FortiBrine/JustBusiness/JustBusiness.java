@@ -3,6 +3,7 @@ package me.FortiBrine.JustBusiness;
 import me.FortiBrine.JustBusiness.commands.AdminCommand;
 import me.FortiBrine.JustBusiness.listeners.Listener;
 import me.FortiBrine.JustBusiness.utils.Business;
+import me.fortibrine.justmoney.utils.BalanceManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -49,6 +50,17 @@ public class JustBusiness extends JavaPlugin {
 
         this.getCommand("justbusiness").setExecutor(new AdminCommand());
 
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                List<Business> b = own.get(player);
+
+                for (Business bb : b) {
+                    BalanceManager.pay(player.getName(), bb.getDD());
+                }
+
+            }
+        }, 20L, 0L);
+
     }
 
     public void loadBusinesses() {
@@ -86,12 +98,14 @@ public class JustBusiness extends JavaPlugin {
 
     }
 
-    public void removeUserBusiness(Player player, String name) {
+    public void removeUserBusiness(String userName, String name) {
         FileConfiguration config = this.getConfig();
 
-        List<String> b = config.getStringList("business_own");
+        List<String> b = config.getStringList("business_own." + userName);
 
         b.remove(name);
+
+        config.set("business_own." + userName, b);
 
         this.saveConfig();
         this.reloadConfig();
@@ -120,9 +134,8 @@ public class JustBusiness extends JavaPlugin {
         this.uploadBusiness(name, business);
     }
 
-    public void uploadUser(Player player, String name) {
+    public void uploadUser(String userName, String name) {
         FileConfiguration config = this.getConfig();
-        String userName = player.getName();
 
         List<String> b = config.getStringList("business_own." + userName);
 
@@ -149,7 +162,7 @@ public class JustBusiness extends JavaPlugin {
         BigInteger cost = business.getCost();
         BigInteger dd = business.getDD();
 
-        config.set("businesses." + name + ".cost.", cost.toString());
+        config.set("businesses." + name + ".cost", cost.toString());
         config.set("businesses." + name + ".dd", dd.toString());
         config.set("businesses." + name + ".x", (int) x);
         config.set("businesses." + name + ".y", (int) y);
@@ -173,6 +186,7 @@ public class JustBusiness extends JavaPlugin {
         int y = businesses.getInt(name+".y", 0);
         int z = businesses.getInt(name+".z", 0);
 
+//        System.out.println(businesses.getString(name+".cost"));
         BigInteger dd = new BigInteger(businesses.getString(name+".dd"));
         BigInteger cost = new BigInteger(businesses.getString(name+".cost"));
 

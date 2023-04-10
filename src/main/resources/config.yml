@@ -6,6 +6,16 @@ radius: 5
 
 messages:
   admin:
+    create:
+      - "Вы создали бизнес %business"
+    give:
+      - "Вы выдали бизнес %business игроку %player"
+    remove:
+      - "Вы убрали бизнес %business у игрока %player"
+    delete:
+      - "Вы удалили бизнес %business"
+    set:
+      - "Вы изменили настройки бизнеса %business"
     non_player_command:
       - "§4Ошибка: §fЭту команду не может исполнить консоль."
     permission:

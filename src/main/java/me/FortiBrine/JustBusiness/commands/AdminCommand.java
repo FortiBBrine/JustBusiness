@@ -2,7 +2,6 @@ package me.FortiBrine.JustBusiness.commands;
 
 import me.FortiBrine.JustBusiness.JustBusiness;
 import me.FortiBrine.JustBusiness.utils.Business;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -77,23 +76,44 @@ public class AdminCommand implements CommandExecutor {
 
             plugin.uploadBusiness(id, business);
 
+            config.getStringList("messages.admin.create").forEach((String message) -> {
+                message = message.replace("%business", args[1]);
+                message = message.replace("%cost", args[2]);
+                message = message.replace("%dd", args[3]);
+
+                player.sendMessage(message);
+            });
+
             return true;
 
         }
 
         if (args[0].equalsIgnoreCase("give") && args.length >= 3) {
-            Player player = Bukkit.getPlayer(args[1]);
             String id = args[2];
 
-            plugin.uploadUser(player, id);
+            plugin.uploadUser(args[1], id);
+
+            config.getStringList("messages.admin.give").forEach((String message) -> {
+                message = message.replace("%business", args[2]);
+                message = message.replace("%player", args[1]);
+
+                sender.sendMessage(message);
+            });
+
             return true;
         }
 
         if (args[0].equalsIgnoreCase("remove") && args.length >= 3) {
-            Player player = Bukkit.getPlayer(args[1]);
             String id = args[2];
 
-            plugin.removeUserBusiness(player, id);
+            plugin.removeUserBusiness(args[1], id);
+
+            config.getStringList("messages.admin.remove").forEach((String message) -> {
+                message = message.replace("%business", args[2]);
+                message = message.replace("%player", args[1]);
+
+                sender.sendMessage(message);
+            });
 
             return true;
         }
@@ -103,6 +123,12 @@ public class AdminCommand implements CommandExecutor {
             String id = args[1];
 
             plugin.deleteBusiness(id);
+
+            config.getStringList("messages.admin.delete").forEach((String message) -> {
+                message = message.replace("%business", args[1]);
+
+                sender.sendMessage(message);
+            });
 
             return true;
         }
@@ -114,6 +140,14 @@ public class AdminCommand implements CommandExecutor {
             BigInteger dd = new BigInteger(args[3]);
 
             plugin.setBusiness(id, cost, dd);
+
+            config.getStringList("messages.admin.set").forEach((String message) -> {
+                message = message.replace("%business", args[1]);
+                message = message.replace("%cost", args[2]);
+                message = message.replace("%dd", args[3]);
+
+                sender.sendMessage(message);
+            });
 
             return true;
         }
