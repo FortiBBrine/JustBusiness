@@ -3,6 +3,7 @@ package me.FortiBrine.JustBusiness;
 import me.FortiBrine.JustBusiness.commands.AdminCommand;
 import me.FortiBrine.JustBusiness.listeners.Listener;
 import me.FortiBrine.JustBusiness.utils.Business;
+import me.FortiBrine.JustBusiness.utils.Expansion;
 import me.fortibrine.justmoney.utils.BalanceManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -50,6 +51,10 @@ public class JustBusiness extends JavaPlugin {
 
         this.getCommand("justbusiness").setExecutor(new AdminCommand());
 
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new Expansion().register();
+        }
+
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 List<Business> b = own.get(player);
@@ -61,6 +66,10 @@ public class JustBusiness extends JavaPlugin {
             }
         }, 20L, 0L);
 
+    }
+
+    public List<Business> get(Player player) {
+        return own.get(player);
     }
 
     public void loadBusinesses() {
